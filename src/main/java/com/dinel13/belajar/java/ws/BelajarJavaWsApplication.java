@@ -1,5 +1,6 @@
 package com.dinel13.belajar.java.ws;
 
+import com.dinel13.belajar.java.ws.security.AppProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +22,10 @@ public class BelajarJavaWsApplication {
 	public SpringApplicationContext springApplicationContext()
 	{
 		return new SpringApplicationContext();
+	}
+
+	@Bean(name="AppProperties")
+	public AppProperties getAppProperties(){
+		return  new AppProperties();
 	}
 }

@@ -36,19 +36,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     // cek jika password ddan email cocok
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req,
-                                                HttpServletResponse res) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try {
 
-            UserLoginRequestModel creds = new ObjectMapper()
-                    .readValue(req.getInputStream(), UserLoginRequestModel.class);
+            UserLoginRequestModel creds = new ObjectMapper().readValue(req.getInputStream(), UserLoginRequestModel.class);
 
-            return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            creds.getEmail(),
-                            creds.getPassword(),
-                            new ArrayList<>())
-            );
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,18 +51,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     //    jika suskse di email dan password
     // method ini hanya dipanggil jika authentication manager berhasil di email dan password
     @Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res,
-                                            FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {
 
         String userName = ((User) auth.getPrincipal()).getUsername(); //ambil username
 
-        String token = Jwts.builder()
-                .setSubject(userName)
-                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
-                .compact();
+        String token = Jwts.builder().setSubject(userName).setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME)).signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
 
         // mengambil user service implement lewat bean spring
         UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
