@@ -1,8 +1,9 @@
 package com.dinel13.belajar.java.ws.service;
 
 import com.dinel13.belajar.java.ws.shared.dto.UserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     UserDto createUser(UserDto user);
 //    UserDto getUser(String email);
 //    UserDto getUserByUserId(String userId);
