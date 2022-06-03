@@ -8,5 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 //    UserEntity findUserByEmail(String email);
     // sudah ready to use karena extend dari parent
+    // auto buat sqlnya karena dihandle oleh libarary
+
     UserEntity findByEmail(String email);
+    UserEntity findByUserId(String userId);
 }

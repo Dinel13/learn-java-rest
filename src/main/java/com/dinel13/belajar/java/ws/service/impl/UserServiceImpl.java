@@ -58,6 +58,17 @@ public class UserServiceImpl implements UserService {
         return returnValue;
     }
 
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+
+        if (userEntity == null) throw new UsernameNotFoundException(userId);
+
+        UserDto returnValue = new UserDto();
+        BeanUtils.copyProperties(userEntity, returnValue);
+        return returnValue;
+    }
+
     // method loadUserByUsername dari userdetails interface from spring
     // UsernameNotFoundException come from spring
     // digunakna spring untuk load dari database ketika signin
