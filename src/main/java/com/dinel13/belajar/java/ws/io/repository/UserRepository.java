@@ -1,4 +1,4 @@
-package com.dinel13.belajar.java.ws;
+package com.dinel13.belajar.java.ws.io.repository;
 
 import com.dinel13.belajar.java.ws.io.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
