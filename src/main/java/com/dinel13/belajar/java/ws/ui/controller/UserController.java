@@ -6,6 +6,7 @@ import com.dinel13.belajar.java.ws.ui.model.request.UserDetailRequestModel;
 import com.dinel13.belajar.java.ws.ui.model.response.UserRest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping(path = "/{id}") // this will mapping to req res as get method
+    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    // this will mapping to req res as get method
+    // resspon bisa json atau xml, dfaultr json karena ada produces
+    // pake comusems untuk atur juga bisa terima json dan xml
     public UserRest getUser(@PathVariable String id) {
         UserRest returnValue = new UserRest();
 
